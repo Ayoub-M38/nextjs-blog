@@ -1,12 +1,7 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { getPreEmitDiagnostics } from 'typescript'
 import styles from '../styles/Home.module.scss'
 import Link from 'next/link'
 
-const BLOG_URL = 'https://ghostcms-backend-nextjs.herokuapp.com'
-const CONTENT_API_KEY = '406ab4fce6185f4247dcd3c2c2'
-
+const {BLOG_URL, CONTENT_API_KEY} = process.env
 
 type Post = {
   title: string
@@ -14,8 +9,10 @@ type Post = {
 }
 
 async function getPosts() {
-  //curl "https://demo.ghost.io/ghost/api/v3/content/posts/?key=22444f78447824223cefc48062"
-  const res = await fetch(`${BLOG_URL}/ghost/api/v3/content/posts/?key=${CONTENT_API_KEY}&fields=title,slug,custom_excerpt,reading_time`).then((res) => res.json())
+  // curl ""
+  const res = await fetch(
+    `${BLOG_URL}/ghost/api/v3/content/posts/?key=${CONTENT_API_KEY}&fields=title,slug,custom_excerpt`
+    ).then((res) => res.json())
 
   const posts = res.posts
 
